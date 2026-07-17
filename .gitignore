@@ -1,0 +1,17 @@
+tt.*
+.tests
+doc/tags
+debug
+.repro
+foo.*
+*.log
+data
+
+# Plugin yang di-download otomatis
+.lazy/
+
+# Backup
+*.bak
+
+# OS
+.DS_Store
