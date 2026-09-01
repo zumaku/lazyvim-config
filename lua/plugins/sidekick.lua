@@ -3,6 +3,12 @@ return {
     "folke/sidekick.nvim",
     opts = {
       cli = {
+        win = {
+          split = {
+            width = 60, -- set desired column width here
+          },
+          layout = "right",
+        },
         mux = {
           -- backend = "zellij",
           backend = "tmux",
