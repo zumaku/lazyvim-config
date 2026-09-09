@@ -31,8 +31,8 @@ vim.opt.sidescrolloff = 5
 -- Delete word like VSCode
 
 -- Ctrl + Backspace → hapus kata ke belakang
--- vim.keymap.set("i", "<C-BS>", "<C-w>", { desc = "Delete word backward" })
-vim.keymap.set("i", "<C-h>", "<C-w>", { desc = "Delete word backward" })
+vim.keymap.set({ "i", "c" }, "<C-BS>", "<C-w>", { desc = "Delete word backward" })
+vim.keymap.set({ "i", "c" }, "<C-h>", "<C-w>", { desc = "Delete word backward" })
 
 -- Ctrl + Delete → hapus kata ke depan
 vim.keymap.set("i", "<C-Del>", "<C-o>dw", { desc = "Delete word forward" })
@@ -122,3 +122,22 @@ vim.keymap.set("n", "<C-k>", "<C-w>k", {
 vim.keymap.set("n", "<leader>br", "<cmd>e!<CR>", {
   desc = "Reload Buffer",
 })
+
+-- Copy relative path
+vim.keymap.set("n", "<leader>yp", function()
+  local filepath = vim.fn.expand("%:p")
+  local git_root = vim.fn.system("git rev-parse --show-toplevel"):gsub("\n", "")
+
+  if vim.v.shell_error == 0 then
+    local relative = filepath:sub(#git_root + 2)
+    vim.fn.setreg("+", relative)
+    vim.notify("Copied: " .. relative)
+  else
+    vim.fn.setreg("+", vim.fn.expand("%"))
+  end
+end, { desc = "Copy Git relative path" })
+
+-- Copy absolute path
+vim.keymap.set("n", "<leader>yP", function()
+  vim.fn.setreg("+", vim.fn.expand("%:p"))
+end, { desc = "Copy absolute path" })
